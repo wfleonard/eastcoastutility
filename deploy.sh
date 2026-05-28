@@ -96,8 +96,7 @@ else
     if sudo -u "$APP_USER" git clone -b "$BRANCH" "$REPO_SSH" "$APP_DIR" 2>/dev/null; then
         echo "  Cloned via SSH"
     else
-        echo "  SSH clone failed — falling back to HTTPS."
-        echo "  (Private repo: git will prompt for a GitHub username + PAT.)"
+        echo "  SSH clone failed — falling back to HTTPS (public repo, no auth needed)."
         sudo -u "$APP_USER" git clone -b "$BRANCH" "$REPO_HTTPS" "$APP_DIR"
     fi
 fi

@@ -24,11 +24,10 @@ The repo itself lands in `/opt/eastcoastutility`.
 ## Prerequisites
 
 1. A Linode Nanode (1 GB, Ubuntu 24.04 LTS) — Nanode 1 GB plan is fine.
-2. A way to access the private GitHub repo from the server. Pick one:
-   - **GitHub deploy key** (recommended): generate `ssh-keygen` as `deploy` on the Nanode after first run, then add the public key to the repo's *Settings → Deploy keys*. Re-run `deploy.sh` and the SSH clone path will succeed.
-   - **Personal Access Token**: when the script prompts for HTTPS credentials, use your GitHub username and a PAT (scope: `repo`) as the password.
-3. DNS access for `eastcoastutility.com` (Linode DNS, Cloudflare, registrar — wherever the zone lives).
-4. A Mailtrap Send token (`MAILTRAP_TOKEN`) — get it from Mailtrap → Sending → API Tokens.
+2. DNS access for `eastcoastutility.com` (Linode DNS, Cloudflare, registrar — wherever the zone lives).
+3. A Mailtrap Send token (`MAILTRAP_TOKEN`) — get it from Mailtrap → Sending → API Tokens.
+
+The GitHub repo (`wfleonard/eastcoastutility`) is public, so the bootstrap and ongoing `git pull`s need no auth.
 
 ## Step 1 — Spin up the Nanode
 
@@ -66,7 +65,7 @@ bash deploy.sh
 The script will:
 
 1. Run through all the apt installs (~3 min)
-2. Try `git clone` over SSH. If that fails (no deploy key yet), it falls back to HTTPS and will prompt for username + PAT.
+2. `git clone` the public repo over HTTPS — no prompts.
 3. Copy `.env.example` → `.env` and pause for you to fill in:
 
    ```
