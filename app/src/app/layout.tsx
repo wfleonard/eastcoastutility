@@ -20,7 +20,7 @@ export default function RootLayout({
                 <footer className="border-t border-border py-6 px-6 text-center text-sm text-foreground/70">
                     <p>
                         &epsilon;&gamma;&upsilon; East Coast Utility, Inc &copy;{" "}
-                        {new Date().getFullYear()} Based out of Fair Haven, NJ 07724
+                        {new Date().getFullYear()}{" "}Based out of Fair Haven, NJ 07724{" "}
                         &epsilon;&gamma;&upsilon;{" "}
                         <a
                             href="mailto:tom@eastcoastutility.com"
