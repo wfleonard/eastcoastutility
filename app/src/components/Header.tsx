@@ -9,10 +9,10 @@ export default function Header({ onContactClick }: Props) {
         <header className="border-b border-border">
             <div className="mx-auto max-w-6xl px-4 py-4">
                 <Image
-                    src="/images/ECUNJHDDHorizontalDirectionalDrillingHero.png"
+                    src="/images/eastcoastutility-250-1-hero.png"
                     alt="East Coast Utility, LLC Logo"
-                    width={1200}
-                    height={240}
+                    width={1536}
+                    height={1024}
                     priority
                     className="h-auto w-full"
                 />
