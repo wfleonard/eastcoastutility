@@ -14,7 +14,7 @@ export default function Header({ onContactClick }: Props) {
                     width={1536}
                     height={1024}
                     priority
-                    className="h-auto w-full"
+                    className="mx-auto h-auto w-full max-w-[900px]"
                 />
                 <nav className="mt-4 flex items-center justify-end gap-6 text-sm font-medium uppercase tracking-wider">
                     <a href="#top" className="hover:text-accent">
