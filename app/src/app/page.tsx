@@ -164,7 +164,7 @@ export default function Home() {
 
             {/* Competencies + Why ECU */}
             <section className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-2">
-                <div>
+                <div className="rounded-xl bg-muted p-6 shadow-md ring-1 ring-border/60">
                     <h2 className="mb-4 text-2xl font-bold text-accent">
                         ECU Core HDD Competencies
                     </h2>
@@ -195,7 +195,7 @@ export default function Home() {
                         />
                     </dl>
                 </div>
-                <div>
+                <div className="rounded-xl bg-muted p-6 shadow-md ring-1 ring-border/60">
                     <h2 className="mb-4 text-2xl font-bold text-accent">
                         Why Choose East Coast Utility
                     </h2>
