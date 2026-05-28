@@ -25,7 +25,7 @@ The repo itself lands in `/opt/eastcoastutility`.
 
 1. A Linode Nanode (1 GB, Ubuntu 24.04 LTS) — Nanode 1 GB plan is fine.
 2. DNS access for `eastcoastutility.com` (Linode DNS, Cloudflare, registrar — wherever the zone lives).
-3. A Mailtrap Send token (`MAILTRAP_TOKEN`) — get it from Mailtrap → Sending → API Tokens.
+3. A Mailtrap Send token (`MAILTRAP_API_TOKEN`) — get it from Mailtrap → Sending → API Tokens.
 
 The GitHub repo (`wfleonard/eastcoastutility`) is public, so the bootstrap and ongoing `git pull`s need no auth.
 
@@ -69,7 +69,7 @@ The script will:
 3. Copy `.env.example` → `.env` and pause for you to fill in:
 
    ```
-   MAILTRAP_TOKEN=<paste your token>
+   MAILTRAP_API_TOKEN=<paste your token>
    CONTACT_FROM_EMAIL=noreply@eastcoastutility.com
    CONTACT_TO_EMAIL=tom@eastcoastutility.com
    ```
@@ -109,7 +109,7 @@ If the email never arrives, check the container logs:
 cd /opt/eastcoastutility && docker compose logs -f nextjs-app
 ```
 
-Most likely cause: `MAILTRAP_TOKEN` is wrong or the `CONTACT_FROM_EMAIL` domain isn't verified in Mailtrap.
+Most likely cause: `MAILTRAP_API_TOKEN` is wrong or the `CONTACT_FROM_EMAIL` domain isn't verified in Mailtrap.
 
 ## Day-2 ops
 

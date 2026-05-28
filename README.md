@@ -15,7 +15,7 @@ npm run dev          # http://localhost:3000
 ## Docker
 
 ```bash
-cp .env.example .env # then fill in MAILTRAP_TOKEN
+cp .env.example .env # then fill in MAILTRAP_API_TOKEN
 docker compose up --build -d
 ```
 
@@ -44,4 +44,4 @@ The site will be available on `http://localhost:3000`.
 
 ## Email transport
 
-Contact-form submissions are emailed to `tom@eastcoastutility.com` via the [Mailtrap Send API](https://send.api.mailtrap.io/api/send). Configure with `MAILTRAP_TOKEN` in `.env`.
+Contact-form submissions are emailed to `tom@eastcoastutility.com` via the [Mailtrap Send API](https://send.api.mailtrap.io/api/send). Configure with `MAILTRAP_API_TOKEN` in `.env`.
