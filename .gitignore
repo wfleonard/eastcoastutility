@@ -1,6 +1,7 @@
 .env
 .next/
 node_modules/
+*.tsbuildinfo
 ._*
 .DS_Store
 .claude/

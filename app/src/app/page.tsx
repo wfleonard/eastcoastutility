@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import ContactModal from "@/components/ContactModal";
 import PartnerCard from "@/components/PartnerCard";
 import { partners } from "@/lib/partners";
+import { BUSINESS } from "@/lib/business";
 
 export default function Home() {
     const [contactOpen, setContactOpen] = useState(false);
@@ -13,6 +14,18 @@ export default function Home() {
     return (
         <main id="top">
             <Header onContactClick={() => setContactOpen(true)} />
+
+            {/*
+              The page had no H1 at all — headings ran H2 → H2 → H2 → H3. The H1
+              is the strongest single on-page statement of what a page is about,
+              so it names the service and the market rather than the company.
+            */}
+            <div className="mx-auto max-w-6xl px-4 pt-8">
+                <h1 className="text-center text-3xl font-bold md:text-4xl">
+                    Horizontal Directional Drilling &amp; Underground Utility
+                    Construction in New Jersey
+                </h1>
+            </div>
 
             {/* Intro: About ECU + Sidebar */}
             <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[2fr_1fr]">
@@ -104,26 +117,26 @@ export default function Home() {
                         className="mx-auto h-auto w-3/5"
                     />
                     <div>
-                        <h2 className="text-xl font-bold">East Coast Utility, LLC</h2>
+                        <h2 className="text-xl font-bold">{BUSINESS.legalName}</h2>
                         <cite className="not-italic text-sm text-foreground/70">
-                            Based out of Fair Haven, NJ
+                            Based out of {BUSINESS.locality}, {BUSINESS.region}
                         </cite>
                     </div>
                     <ul className="space-y-1 text-sm">
                         <li>
                             <a
-                                href="mailto:tom@eastcoastutility.com"
+                                href={`mailto:${BUSINESS.email}`}
                                 className="text-accent hover:underline"
                             >
-                                tom@eastcoastutility.com
+                                {BUSINESS.email}
                             </a>
                         </li>
                         <li>
                             <a
-                                href="tel:+19089026728"
+                                href={`tel:${BUSINESS.phone}`}
                                 className="text-accent hover:underline"
                             >
-                                +1 908-902-6728
+                                {BUSINESS.phoneDisplay}
                             </a>
                         </li>
                     </ul>
@@ -135,8 +148,14 @@ export default function Home() {
                         className="mx-auto h-auto w-3/5 rounded"
                     />
                     <div>
-                        <h2 className="text-lg font-bold">Tom Colleran</h2>
-                        <h3 className="text-sm text-foreground/70">Owner, ECU</h3>
+                        <h2 className="text-lg font-bold">
+                            {BUSINESS.founderShortName}
+                        </h2>
+                        {/* Job title, not a section heading — was an H3, which
+                            put a phantom level in the document outline. */}
+                        <p className="text-sm text-foreground/70">
+                            Owner, {BUSINESS.shortName}
+                        </p>
                     </div>
                 </aside>
             </section>
@@ -244,7 +263,7 @@ export default function Home() {
                 className="mx-auto max-w-4xl px-4 py-12 text-center"
             >
                 <h2 className="mb-4 text-2xl font-bold text-accent">
-                    East Coast Utility, Inc.
+                    {BUSINESS.legalName}
                 </h2>
                 <p className="text-foreground/90">
                     At East Coast Utility, we specialize in delivering top-tier horizontal
