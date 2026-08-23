@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 
 type Props = { open: boolean; onClose: () => void };
@@ -13,6 +13,13 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function ContactModal({ open, onClose }: Props) {
     const [status, setStatus] = useState<Status>("idle");
     const [error, setError] = useState<string | null>(null);
+
+    // Timestamp of when the form became visible. Server rejects submissions
+    // that come in faster than a human could plausibly type — filters bots.
+    const openedAtRef = useRef<number>(0);
+    useEffect(() => {
+        if (open) openedAtRef.current = Date.now();
+    }, [open]);
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,6 +34,12 @@ export default function ContactModal({ open, onClose }: Props) {
             cell: String(fd.get("cell") || "").trim(),
             email: String(fd.get("email") || "").trim(),
             comment: String(fd.get("comment") || "").trim(),
+            // Honeypot: real users leave this blank because the field is
+            // visually hidden. Bots that auto-fill every input will trip it.
+            _hp: String(fd.get("website") || ""),
+            _elapsedMs: openedAtRef.current
+                ? Date.now() - openedAtRef.current
+                : 0,
         };
 
         if (!payload.fname || !payload.lname || !payload.company || !payload.cell || !payload.email) {
@@ -79,11 +92,11 @@ export default function ContactModal({ open, onClose }: Props) {
                 </div>
             ) : (
                 <form onSubmit={onSubmit} className="flex flex-col gap-3">
-                    <Field label="First Name" name="fname" type="text" required />
-                    <Field label="Last Name" name="lname" type="text" required />
-                    <Field label="Company" name="company" type="text" required />
-                    <Field label="Cell Phone" name="cell" type="tel" required />
-                    <Field label="Email" name="email" type="email" required />
+                    <Field label="First Name" name="fname" type="text" required maxLength={50} />
+                    <Field label="Last Name" name="lname" type="text" required maxLength={50} />
+                    <Field label="Company" name="company" type="text" required maxLength={100} />
+                    <Field label="Cell Phone" name="cell" type="tel" required maxLength={20} />
+                    <Field label="Email" name="email" type="email" required maxLength={254} />
                     <label className="flex flex-col gap-1">
                         <span className="text-sm font-medium">
                             What services do you need from ECU?
@@ -91,9 +104,39 @@ export default function ContactModal({ open, onClose }: Props) {
                         <textarea
                             name="comment"
                             rows={4}
+                            maxLength={2000}
                             className="rounded border border-border bg-white p-2 text-foreground"
                         />
                     </label>
+
+                    {/*
+                        Honeypot field — visually hidden, off-screen, not
+                        tabbable, autocomplete off, aria-hidden so screen
+                        readers skip it. Real users never see or fill it;
+                        naive bots that auto-fill every input will.
+                    */}
+                    <div
+                        aria-hidden="true"
+                        style={{
+                            position: "absolute",
+                            left: "-9999px",
+                            top: "-9999px",
+                            width: 1,
+                            height: 1,
+                            overflow: "hidden",
+                        }}
+                    >
+                        <label htmlFor="ecu-hp-website">Website</label>
+                        <input
+                            id="ecu-hp-website"
+                            name="website"
+                            type="text"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            defaultValue=""
+                        />
+                    </div>
+
                     {error && <p className="text-sm text-red-600">{error}</p>}
                     <button
                         type="submit"
@@ -113,11 +156,13 @@ function Field({
     name,
     type,
     required,
+    maxLength,
 }: {
     label: string;
     name: string;
     type: string;
     required?: boolean;
+    maxLength?: number;
 }) {
     return (
         <label className="flex flex-col gap-1">
@@ -129,6 +174,7 @@ function Field({
                 type={type}
                 name={name}
                 required={required}
+                maxLength={maxLength}
                 className="rounded border border-border bg-white p-2 text-foreground"
             />
         </label>
