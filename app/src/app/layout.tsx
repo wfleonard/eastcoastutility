@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import JsonLd from "@/components/JsonLd";
 import { BUSINESS, LOCATION_LINE } from "@/lib/business";
 import "./globals.css";
+
+const GA_ID = "G-2SK3NM1WEQ";
 
 export const metadata: Metadata = {
     metadataBase: new URL(BUSINESS.site),
@@ -37,6 +40,19 @@ export default function RootLayout({
     return (
         <html lang="en" className="h-full antialiased">
             <body className="min-h-full flex flex-col bg-background text-foreground">
+                {/* Google Analytics (gtag.js) — loaded once at the root so every page reports pageviews. */}
+                <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+                    strategy="afterInteractive"
+                />
+                <Script id="gtag-init" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${GA_ID}');
+                    `}
+                </Script>
                 <JsonLd />
                 <div className="flex-1">{children}</div>
                 <footer className="border-t border-border py-6 px-6 text-center text-sm text-foreground/70">
