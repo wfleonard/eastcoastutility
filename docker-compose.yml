@@ -4,4 +4,7 @@ services:
         restart: unless-stopped
         env_file: .env
         ports:
-            - "3000:3000"
+            # Localhost only: nginx on the host proxies to 127.0.0.1:3000. A bare
+            # "3000:3000" also published the app on the public IP over plain HTTP
+            # (Docker's published ports bypass UFW).
+            - "127.0.0.1:3000:3000"
