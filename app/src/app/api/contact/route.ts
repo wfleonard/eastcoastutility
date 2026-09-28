@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { sendEmail } from "@/lib/mail";
+import { notifySaxonAdmin } from "@/lib/saxonAdmin";
 
 /**
  * POST /api/contact
@@ -163,6 +165,18 @@ export async function POST(req: NextRequest) {
         console.warn(`[contact] non-Latin fields blocked from ${ip}`);
         return NextResponse.json({ ok: true });  // silent to bot
     }
+
+    // ── Record the lead on the Saxon Admin dashboard ─────────
+    // Before the email, so a lead is counted even if Mailtrap fails.
+    // Phone number stays out of it; the email to Tom has the full details.
+    await notifySaxonAdmin({
+        id: randomUUID(),
+        type: "lead",
+        title: comment ? comment.slice(0, 140) : "Contact request (no details)",
+        name: `${fname} ${lname}`,
+        email,
+        company,
+    });
 
     // ── Send email ───────────────────────────────────────────
     const to = process.env.CONTACT_TO_EMAIL || "tom@eastcoastutility.com";
