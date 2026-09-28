@@ -163,17 +163,32 @@ export default function Home() {
             {/* Hero gallery */}
             <section className="bg-muted py-8">
                 <div className="mx-auto grid max-w-6xl gap-4 px-4 md:grid-cols-3">
+                    {/*
+                      These are Ditch Witch JT20 manufacturer photos, not ECU
+                      job sites, and the alt text says so. Replace them with
+                      Tom's own job photos when he supplies them.
+                    */}
                     {[
-                        "JT20-Details-134.jpg",
-                        "JT20-hero-image.jpg",
-                        "Productivity_JT20-Details-070 (1).jpg",
-                    ].map((file, i) => (
+                        {
+                            file: "JT20-Details-134.jpg",
+                            alt: "Directional drill rig with drill pipe entering the ground for a trenchless utility bore",
+                        },
+                        {
+                            file: "JT20-hero-image.jpg",
+                            alt: "Ditch Witch JT20 horizontal directional drill set up on a grass right-of-way",
+                        },
+                        {
+                            file: "Productivity_JT20-Details-070 (1).jpg",
+                            alt: "Operator loading drill pipe into a horizontal directional drill beside a roadway",
+                        },
+                    ].map(({ file, alt }) => (
                         <div key={file} className="overflow-hidden rounded">
                             <Image
                                 src={`/images/${file}`}
-                                alt={`ECU HDD Image ${i + 1}`}
+                                alt={alt}
                                 width={600}
                                 height={400}
+                                sizes="(max-width: 768px) 100vw, 370px"
                                 className="h-full w-full object-cover"
                             />
                         </div>

@@ -28,6 +28,8 @@ export const BUSINESS = {
     founder: 'Thomas Colleran',
     founderShortName: 'Tom Colleran',
     foundingYear: '2008',
+    /** NJ Division of Revenue entity number (public record, via OpenCorporates). */
+    njEntityId: '0600320214',
     email: 'tom@eastcoastutility.com',
     /** E.164, for tel: links and schema. */
     phone: '+19089026728',

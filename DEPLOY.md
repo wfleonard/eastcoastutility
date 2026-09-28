@@ -120,6 +120,17 @@ ecu-update
 ```
 Pulls main, rebuilds, restarts. ~30 seconds.
 
+### Tell Bing about new or changed pages (IndexNow)
+After a deploy that adds or changes pages, from your Mac:
+```bash
+cd app && npm run indexnow                        # every URL in the sitemap
+cd app && npm run indexnow -- /resources/some-page # or just these paths
+```
+The script checks that the key file (`public/<key>.txt`) is live before submitting. ChatGPT's search draws on Bing, so this shortens the time before a new page can be cited.
+
+### Google Analytics key events (one-time setup)
+The site sends `generate_lead` (with `method`: phone, email or contact_form) and `ai_referral` (with `ai_source`: chatgpt, perplexity, claude, gemini, copilot). In GA → Admin → Events, mark `generate_lead` as a key event. To break the events down by `method` and `ai_source`, register both as event-scoped custom dimensions (Admin → Custom definitions).
+
 ### Tail logs
 ```bash
 cd /opt/eastcoastutility && docker compose logs -f

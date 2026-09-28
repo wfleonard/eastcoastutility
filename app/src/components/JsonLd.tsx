@@ -80,6 +80,13 @@ export default function JsonLd() {
             description:
                 'New Jersey-based horizontal directional drilling and underground utility construction contractor serving New Jersey, New York, Pennsylvania, Delaware, and Maryland. Founded 2008.',
             foundingDate: BUSINESS.foundingYear,
+            // NJ Division of Revenue entity number: a public-record identifier
+            // that separates ECU from similarly named companies elsewhere.
+            identifier: {
+                '@type': 'PropertyValue',
+                propertyID: 'NJ Business Entity ID',
+                value: BUSINESS.njEntityId,
+            },
             email: BUSINESS.email,
             telephone: BUSINESS.phoneDisplay,
             image: `${SITE}/images/east-coast-utility-logo.png`,

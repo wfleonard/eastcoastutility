@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
+import { trackLead } from "./Analytics";
 
 type Props = { open: boolean; onClose: () => void };
 
@@ -65,6 +66,7 @@ export default function ContactModal({ open, onClose }: Props) {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Submission failed");
             setStatus("success");
+            trackLead("contact_form");
             form.reset();
         } catch (err) {
             setStatus("error");

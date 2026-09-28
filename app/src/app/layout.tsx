@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import JsonLd from "@/components/JsonLd";
+import Analytics from "@/components/Analytics";
 import { BUSINESS, LOCATION_LINE } from "@/lib/business";
 import "./globals.css";
 
@@ -45,7 +46,12 @@ export default function RootLayout({
                     src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
                     strategy="afterInteractive"
                 />
-                <Script id="gtag-init" strategy="afterInteractive">
+                {/*
+                  beforeInteractive so the js/config commands are queued before
+                  any component effect pushes an event (components/Analytics.tsx).
+                  Events queued ahead of config have no destination and are lost.
+                */}
+                <Script id="gtag-init" strategy="beforeInteractive">
                     {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
@@ -54,6 +60,7 @@ export default function RootLayout({
                     `}
                 </Script>
                 <JsonLd />
+                <Analytics />
                 <div className="flex-1">{children}</div>
                 <footer className="border-t border-border py-6 px-6 text-center text-sm text-foreground/70">
                     {/*
