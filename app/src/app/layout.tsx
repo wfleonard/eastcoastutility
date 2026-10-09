@@ -90,6 +90,16 @@ export default function RootLayout({
                             {BUSINESS.phoneDisplay}
                         </a>
                     </p>
+                    <p className="saxon-credit" style={{ margin: '12px 0 0', fontSize: '0.85em', opacity: 0.85 }}>
+                        <a
+                            href="https://saxonenterprises.net/"
+                            title="Website design and development by Saxon Enterprises, Tinton Falls, NJ"
+                            style={{ color: 'inherit', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11 2 4 17h7z" /><path d="M13 5v12h7z" /><path d="M3 19h18l-2 3H5z" /></svg>
+                            <span>Charted and crewed by <span style={{ textDecoration: 'underline' }}>Saxon Enterprises</span></span>
+                        </a>
+                    </p>
                 </footer>
             </body>
         </html>
